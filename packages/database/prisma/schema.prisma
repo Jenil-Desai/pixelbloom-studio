@@ -36,12 +36,13 @@ model Users {
 
 model Artists {
   id String @id @default(uuid())
+  clerkId String @unique
   name String?
   email String @unique
-  mobileNo String @unique
-  password String
+  mobileNo String? @unique
   gender Gender?
   country String?
+  isVerified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   wallpapers Wallpapers[]

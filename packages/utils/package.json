@@ -1,0 +1,10 @@
+{
+  "name": "@repo/utils",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}
