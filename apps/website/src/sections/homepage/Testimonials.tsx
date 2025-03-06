@@ -1,4 +1,3 @@
-import Image from "next/image";
 import TestimonialCard from "../../components/TestimonialCard";
 import { TESTIMONIALS } from "../../constants/testimonials";
 
