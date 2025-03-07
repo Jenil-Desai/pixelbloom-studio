@@ -3,6 +3,6 @@ declare namespace NodeJS {
     NODE_ENV: "development" | "production" | "test";
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: string;
     CLERK_SECRET_KEY: string;
-    CLERK_WEBHOOK_SECRET: string;
+    SIGNING_SECRET: string;
   }
 }
