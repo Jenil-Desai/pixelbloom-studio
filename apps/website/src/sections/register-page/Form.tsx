@@ -5,18 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSignUp } from "@clerk/nextjs";
-
-import { signUpFormSchema, SignUpFormType } from "@/schemas/signUpFormSchema";
-import { logger } from "@repo/utils";
 import { useForm } from "react-hook-form";
+import { useSignUp } from "@clerk/nextjs";
+import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+
+import { signUpFormSchema, SignUpFormType } from "@/schemas/signUpFormSchema";
+import VerificationForm from "./verificationForm";
+import { logger } from "@repo/utils";
 
 export default function RegisterForm() {
+  const [isVerifying, setIsVerifying] = useState(false);
   const { isLoaded, signUp, setActive } = useSignUp();
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,19 +31,24 @@ export default function RegisterForm() {
     },
   });
 
-  async function signUpArtist(data: SignUpFormType) {
-    if (!isLoaded) return;
+  const onSubmit = handleSubmit(handleArtistRegistration);
 
+  async function handleArtistRegistration(data: SignUpFormType) {
+    if (!isLoaded) return;
     try {
-      const session = await signUp.create({
+      await signUp.create({
         emailAddress: data.email,
         password: data.password,
-        firstName: data.name,
+        firstName: data.name.slice(0, data.name.indexOf(" ")),
+        lastName: data.name.slice(data.name.indexOf(" ") + 1),
       });
-      setActive({ session: session?.createdSessionId });
-      router.push("/");
+
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      setIsVerifying(true);
     } catch (error) {
-      logger.error("Error signing up", error);
+      logger.error("Error signing up artist", error);
       const errorMessage = error instanceof Error ? error.message : "Something went wrong";
       toast.error("Error", {
         description: errorMessage,
@@ -50,7 +56,11 @@ export default function RegisterForm() {
       });
     }
   }
-  const onSubmit = handleSubmit(signUpArtist);
+
+  if (isVerifying) {
+    if (!isLoaded) return null;
+    return <VerificationForm isLoaded signUp={signUp} setActive={setActive} />;
+  }
 
   return (
     <form className="p-6 md:p-8" onSubmit={onSubmit}>
@@ -61,22 +71,17 @@ export default function RegisterForm() {
         </div>
         <div className="grid gap-2">
           <Label htmlFor="name">Name</Label>
-          <Input id="name" type="text" placeholder="John Doe" {...register("name")} />
+          <Input id="name" type="text" placeholder="John Doe" aria-invalid={!!errors.name} {...register("name")} />
           {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
         </div>
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="johndoe@example.com" {...register("email")} />
+          <Input id="email" type="email" placeholder="johndoe@example.com" aria-invalid={!!errors.email} {...register("email")} />
           {errors.email && <span className="text-red-500 text-xs">{errors.email.message}</span>}
         </div>
         <div className="grid gap-2">
-          <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
-            <a href="#" className="ml-auto text-sm underline-offset-2 hover:underline">
-              Forgot your password?
-            </a>
-          </div>
-          <Input id="password" type="password" {...register("password")} />
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" aria-invalid={!!errors.password} {...register("password")} />
           {errors.password && <span className="text-red-500 text-xs">{errors.password.message}</span>}
         </div>
         <div id="clerk-captcha"></div>

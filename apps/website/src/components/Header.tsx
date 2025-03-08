@@ -7,9 +7,11 @@ import { Menu, X } from "lucide-react";
 import { HEADER_LINKS } from "../constants/headerLinks";
 import Image from "next/image";
 import { useAuth, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
   const { isSignedIn } = useAuth();
 
   return (
@@ -34,10 +36,10 @@ export default function Header() {
           <UserButton />
         ) : (
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="outline" size="sm" className="bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
+            <Button onClick={() => router.push("/sign-in")} variant="outline" size="sm" className="bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
               Log in
             </Button>
-            <Button size="sm" className="bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
+            <Button onClick={() => router.push("/sign-up")} size="sm" className="bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
               Join as Artist
             </Button>
           </div>
@@ -62,10 +64,10 @@ export default function Header() {
               <UserButton />
             ) : (
               <div className="flex flex-col space-y-2 pt-2">
-                <Button variant="outline" size="sm" className="w-full bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
+                <Button onClick={() => router.push("/sign-in")} variant="outline" size="sm" className="w-full bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
                   Log in
                 </Button>
-                <Button size="sm" className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
+                <Button onClick={() => router.push("/sign-up")} size="sm" className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
                   Join as Artist
                 </Button>
               </div>
