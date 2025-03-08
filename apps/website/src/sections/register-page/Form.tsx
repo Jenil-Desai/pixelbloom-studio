@@ -12,7 +12,7 @@ import { logger } from "@repo/utils";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const { isLoaded, signUp, setActive } = useSignUp();
