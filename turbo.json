@@ -1,7 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
       "dependsOn": ["^db:generate", "^build"],
@@ -29,6 +28,5 @@
     "db:deploy": {
       "cache": false
     }
-  },
-  "globalEnv": ["NODE_ENV", "CLERK_SECRET_KEY", "SIGNING_SECRET", "DATABASE_URL"]
+  }
 }
