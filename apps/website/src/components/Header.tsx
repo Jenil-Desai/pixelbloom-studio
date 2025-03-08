@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { HEADER_LINKS } from "../constants/headerLinks";
 import Image from "next/image";
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -28,14 +30,18 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="sm" className="bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
-            Log in
-          </Button>
-          <Button size="sm" className="bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
-            Join as Artist
-          </Button>
-        </div>
+        {isSignedIn ? (
+          <UserButton />
+        ) : (
+          <div className="hidden md:flex items-center gap-4">
+            <Button variant="outline" size="sm" className="bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
+              Log in
+            </Button>
+            <Button size="sm" className="bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
+              Join as Artist
+            </Button>
+          </div>
+        )}
 
         <button className="md:hidden text-black" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -52,14 +58,18 @@ export default function Header() {
                 </Link>
               );
             })}
-            <div className="flex flex-col space-y-2 pt-2">
-              <Button variant="outline" size="sm" className="w-full bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
-                Log in
-              </Button>
-              <Button size="sm" className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
-                Join as Artist
-              </Button>
-            </div>
+            {isSignedIn ? (
+              <UserButton />
+            ) : (
+              <div className="flex flex-col space-y-2 pt-2">
+                <Button variant="outline" size="sm" className="w-full bg-transparent border-black/20 text-black hover:bg-black/10 hover:text-black">
+                  Log in
+                </Button>
+                <Button size="sm" className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
+                  Join as Artist
+                </Button>
+              </div>
+            )}
           </nav>
         </div>
       )}

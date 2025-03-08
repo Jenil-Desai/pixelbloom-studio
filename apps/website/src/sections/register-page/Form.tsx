@@ -12,9 +12,11 @@ import { logger } from "@repo/utils";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function RegisterForm() {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,7 +29,6 @@ export default function RegisterForm() {
       password: "",
     },
   });
-  const onSubmit = handleSubmit(signUpArtist);
 
   async function signUpArtist(data: SignUpFormType) {
     if (!isLoaded) return;
@@ -39,6 +40,7 @@ export default function RegisterForm() {
         firstName: data.name,
       });
       setActive({ session: session?.createdSessionId });
+      router.push("/");
     } catch (error) {
       logger.error("Error signing up", error);
       const errorMessage = error instanceof Error ? error.message : "Something went wrong";
@@ -48,6 +50,7 @@ export default function RegisterForm() {
       });
     }
   }
+  const onSubmit = handleSubmit(signUpArtist);
 
   return (
     <form className="p-6 md:p-8" onSubmit={onSubmit}>
