@@ -1,5 +1,5 @@
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { prisma } from "@repo/db";
+import { db } from "@repo/db";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { logger } from "@repo/utils";
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     switch (evt.type) {
       case "user.created": {
         try {
-          artist = await prisma.artists.create({
+          artist = await db.artists.create({
             data: {
               clerkId: clerkUserId,
               email: evt.data.email_addresses[0].email_address,
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
       }
       case "user.deleted": {
         try {
-          artist = await prisma.artists.delete({
+          artist = await db.artists.delete({
             where: { clerkId: clerkUserId },
           });
           logger.success(`[SERVER] : Artist deleted with clerkId: ${clerkUserId}`);
