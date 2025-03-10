@@ -85,7 +85,7 @@ export async function POST(request: Request) {
         break;
     }
 
-    return NextResponse.json({ artist });
+    return NextResponse.json("", { status: 200 });
   } catch (error) {
     logger.error("[SERVER] : Webhook processing failed:", error);
     return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
