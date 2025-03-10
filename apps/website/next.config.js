@@ -1,4 +1,4 @@
-const { PrismaPlugin } = require("@prisma/nextjs-monorepo-workaround-plugin");
+const PrismaPlugin = require("@prisma/nextjs-monorepo-workaround-plugin");
 
 const nextConfig = {
   images: {
@@ -20,6 +20,7 @@ const nextConfig = {
 
     return config;
   },
+  transpilePackages: ["@prisma/nextjs-monorepo-workaround-plugin"],
 };
 
 export default nextConfig;
