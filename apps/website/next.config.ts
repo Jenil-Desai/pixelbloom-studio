@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config) => {
+    config.plugins.push(require("@prisma/nextjs-monorepo-workaround-plugin")());
+    return config;
+  },
 };
 
 export default nextConfig;
