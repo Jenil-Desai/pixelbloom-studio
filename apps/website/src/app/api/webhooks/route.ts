@@ -72,7 +72,6 @@ export async function POST(req: Request) {
 
     // Handle different webhook event types
     try {
-      let artist = null;
       switch (evt.type) {
         case "user.created": {
           try {
@@ -83,7 +82,7 @@ export async function POST(req: Request) {
             }
 
             // Create artist in database
-            artist = await db.artists.create({
+            await db.artists.create({
               data: {
                 clerkId: clerkUserId,
                 email: evt.data.email_addresses[0].email_address,
