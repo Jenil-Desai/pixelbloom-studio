@@ -6,7 +6,8 @@
   "types": "./src/index.ts",
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "prisma db push --skip-generate",
+    "build": "bun db:generate"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2"
