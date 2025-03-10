@@ -1,6 +1,6 @@
-import type { NextConfig } from "next";
+const { PrismaPlugin } = require("@prisma/nextjs-monorepo-workaround-plugin");
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -13,8 +13,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (config) => {
-    config.plugins.push(require("@prisma/nextjs-monorepo-workaround-plugin")());
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
+
     return config;
   },
 };
