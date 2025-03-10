@@ -99,7 +99,7 @@ export async function POST(req: Request) {
         case "user.deleted": {
           try {
             // Delete artist from database
-            artist = await db.artists.delete({
+            await db.artists.delete({
               where: { clerkId: clerkUserId },
             });
             logger.success(`[SERVER]: Artist deleted with clerkId: ${clerkUserId}`);
