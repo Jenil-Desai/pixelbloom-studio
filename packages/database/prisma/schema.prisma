@@ -7,21 +7,12 @@
 generator client {
   provider = "prisma-client-js"
   output = "../generated/client"
-  binaryTargets = ["native","rhel-openssl-1.0.x"]
+  binaryTargets = ["native","rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model Admins {
-  id String @id @default(uuid())
-  name String?
-  email String @unique
-  password String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Users {
@@ -43,6 +34,7 @@ model Artists {
   mobileNo String? @unique
   gender Gender?
   country String?
+  role Role @default(ARTIST)
   isVerified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -102,4 +94,9 @@ enum Platform {
 enum Gender {
   MALE
   FEMALE
+}
+
+enum Role {
+  ARTIST
+  ADMIN
 }
