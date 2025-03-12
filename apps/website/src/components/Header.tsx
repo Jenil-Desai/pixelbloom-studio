@@ -8,11 +8,15 @@ import Link from "next/link";
 
 import { HEADER_LINKS } from "../constants/headerLinks";
 import { Button } from "@/components/ui/button";
+import { useHide } from "@/app/hooks/useHide";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
+  const hideHeader = useHide({ pathname: ["/admin", "/artists"] });
   const { isSignedIn } = useAuth();
+  const router = useRouter();
+
+  if (hideHeader) return null;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-black/10 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">

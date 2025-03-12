@@ -1,8 +1,14 @@
+"use client";
 import Link from "next/link";
 import { ARTISTS_LINKS, COMPANY_LINKS, SOCIAL_LINKS, USER_LINKS } from "../constants/footerLinks";
 import Image from "next/image";
+import { useHide } from "@/app/hooks/useHide";
 
 export default function Footer() {
+  const hideFooter = useHide({ pathname: ["/admin", "/artists"] });
+
+  if (hideFooter) return null;
+
   return (
     <footer className="w-full border-t border-black/10 py-12 md:py-16 lg:py-20 bg-white">
       <div className="px-4 md:px-6">

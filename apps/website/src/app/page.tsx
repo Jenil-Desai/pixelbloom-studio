@@ -11,8 +11,6 @@ import Footer from "../components/Footer";
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white text-black">
-      <Header />
-
       <main className="flex-1">
         {/* Hero Section */}
         <Hero />
@@ -35,8 +33,6 @@ export default function LandingPage() {
         {/* Final CTA Section */}
         <FinaleCTA />
       </main>
-
-      <Footer />
     </div>
   );
 }
