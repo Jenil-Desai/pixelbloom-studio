@@ -6,7 +6,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { HEADER_LINKS } from "../constants/headerLinks";
+import { HEADER_LINKS } from "@/constants/headerLinks";
 import { Button } from "@/components/ui/button";
 import { useHide } from "@/app/hooks/useHide";
 

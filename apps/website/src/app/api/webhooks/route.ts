@@ -1,4 +1,4 @@
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { db } from "@repo/db";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
@@ -88,6 +88,14 @@ export async function POST(req: Request) {
                 email: evt.data.email_addresses[0].email_address,
               },
             });
+
+            const client = await clerkClient();
+            client.users.updateUserMetadata(clerkUserId, {
+              publicMetadata: {
+                role: "ARTIST",
+              },
+            });
+
             logger.success(`[SERVER]: Artist created with clerkId: ${clerkUserId}`);
           } catch (dbError) {
             logger.error("[SERVER]: Error creating artist in database:", dbError);

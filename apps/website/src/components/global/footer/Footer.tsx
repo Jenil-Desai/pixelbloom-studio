@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ARTISTS_LINKS, COMPANY_LINKS, SOCIAL_LINKS, USER_LINKS } from "../constants/footerLinks";
+import { ARTISTS_LINKS, COMPANY_LINKS, SOCIAL_LINKS, USER_LINKS } from "@/constants/footerLinks";
 import Image from "next/image";
 import { useHide } from "@/app/hooks/useHide";
 
