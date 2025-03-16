@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useHide } from "@/app/hooks/useHide";
 
 export default function Footer() {
-  const hideFooter = useHide({ pathname: ["/admin", "/artists"] });
+  const hideFooter = useHide({ pathname: ["/admin", "/artist"] });
 
   if (hideFooter) return null;
 

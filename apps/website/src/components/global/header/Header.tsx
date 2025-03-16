@@ -12,7 +12,7 @@ import { useHide } from "@/app/hooks/useHide";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const hideHeader = useHide({ pathname: ["/admin", "/artists"] });
+  const hideHeader = useHide({ pathname: ["/admin", "/artist"] });
   const { isSignedIn } = useAuth();
   const router = useRouter();
 

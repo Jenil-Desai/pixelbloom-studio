@@ -15,6 +15,8 @@ export default clerkMiddleware(async (auth, request) => {
     const url = new URL("/", request.url);
     return NextResponse.redirect(url);
   }
+
+  return NextResponse.next();
 });
 
 export const config = {
